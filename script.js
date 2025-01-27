@@ -14,58 +14,61 @@ function disponibilidad(cupos){
     }
 }
 
-function mensajeInscripcion(num,nombre){
+function mensajeInscripcion(num){
     if(num){
         alert("Inscripcion exitosa, estaremos publicando las fechas de comienzo");
-        console.log("Se ha añadido al turno de adolescentes a " +  nombre);
+        console.log("Se ha añadido a un alumno nuevo");
     }else{
-        alert("Lo sentimos " + nombre + ", el cupo está completo");
+        alert("Lo sentimos, el cupo está completo");
         console.error("No se ha podido inscribir por falta de cupos");
     }
     
 }
 
-function sacarTurno(cantidad){
+const pedirNombre = () => {
+    let nom = prompt("Por favor ingrese su nombre para anotarse en las clases");
+    nom.toLowerCase();
+    return nom;
+}
+
+function sacarTurno(){
     for(let j=1;j<=cantidad;j++){
-        alert("Inscripcion persona " + j);
-        let edad = prompt("Ingrese su edad");
+        let edad = prompt("Inscripción persona " + j +" - Ingrese su edad");
         parseInt(edad);
         if(edad<4 || edad>60){
             alert("Lo sentimos, no disponemos de clases para la edad ingresada");
             console.error("Edad no aceptada");
         }
         else{
-            let nombre = prompt("Por favor ingrese su nombre para anotarse en las clases");
-            nombre.toLowerCase();
             if(edad<19){
                 if(disponibilidad(adolescentes)){
+                    let nombre = pedirNombre();
                     adolescentes.push(nombre);
-                    console.log(adolescentes);
-                    mensajeInscripcion(1,nombre);
+                    mensajeInscripcion(1);
                 }
                 else{
-                    mensajeInscripcion(0,nombre);
+                    mensajeInscripcion(0);
                 }
             }
             else{
                 if(edad<41){
                     if(disponibilidad(adultos)){
+                        let nombre = pedirNombre();
                         adultos.push(nombre);
-                        console.log(adultos);
-                        mensajeInscripcion(1,nombre);
+                        mensajeInscripcion(1);
                     }
                     else{
-                        mensajeInscripcion(0,nombre);
+                        mensajeInscripcion(0);
                     }
                 }
                 else{
                     if(disponibilidad(mayores)){
+                        let nombre = pedirNombre();
                         mayores.push(nombre);
-                        console.log(mayores);
-                        mensajeInscripcion(1,nombre);
+                        mensajeInscripcion(1);
                     }
                     else{
-                        mensajeInscripcion(0,nombre);
+                        mensajeInscripcion(0);
                     }
                 }
             }
@@ -95,11 +98,10 @@ function buscar(alumnos,nombre){
 }
 
 function baja(){
-    let nombre = prompt("Por favor ingrese su nombre");
-    nombre.toLowerCase();
+    let nombre = pedirNombre();
     let edad = prompt("Tambien solicitamos su edad");
     if(edad<4 || edad>60){
-        alert("Usted no se encuentra inscripto");
+        alert("Usted no se encuentra inscripto ya que no disponemos clases para esa edad");
         console.error("Persona no inscripta");
     }
     else{
@@ -107,10 +109,9 @@ function baja(){
             let posicion = buscar(adolescentes,nombre);
             if(posicion != 0){
                 adolescentes.splice(posicion,1);
-                console.log(adolescentes);
             }
             else{
-                alert("Usted no se encuentra inscripto");
+                alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
             }
         }
         else{
@@ -120,7 +121,7 @@ function baja(){
                     adultos.splice(posicion,1);
                 }
                 else{
-                    alert("Usted no se encuentra inscripto");
+                    alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
                 }
             }
             else{
@@ -129,7 +130,7 @@ function baja(){
                     mayores.splice(posicion,1);
                 }
                 else{
-                    alert("Usted no se encuentra inscripto");
+                    alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
                 }
             }
         }
@@ -139,22 +140,24 @@ function baja(){
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 const informacion = () =>{
+    let asegurar = false;
     let telefono = prompt("Para recibir información por favor ingrese su numero de telefono y a la brevedad nos estaremos comunicando");
-    alert("El numero ingresado fue " + telefono);
-    let asegurar = confirm("¿Es correcto?");
-    if(asegurar){
-        alert("¡Excelente!");
-        console.log("Enviar informacion a " + telefono);
+    while(!asegurar){
+        asegurar = confirm("El numero ingresado fue " + telefono + " ¿Es correcto?");
+        if(!asegurar){
+            telefono = prompt("Por favor vuelva a ingresar su telefono");
+        }
+        else{
+            asegurar=true;
+        }
     }
-    else{
-        alert("Cualquier cosa estamos disponibles ante cualquier consulta");
-    }
+    console.log("Enviar informacion a " + telefono); 
 }
     
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 let cantidad = prompt("¿Cuantas personas quieren inscribirse?");
-sacarTurno(cantidad);
+sacarTurno();
 
 let confirmar = confirm("¿Esta seguro que quiere darse de baja?");
 if(confirmar){

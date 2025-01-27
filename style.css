@@ -1,0 +1,27 @@
+*{
+    background-color: black;
+}
+
+body{
+    text-align: center;
+    margin-top: 330px;
+}
+
+h1{
+    color: rgb(187, 132, 238);
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size: 60px;
+}
+
+h2{
+    color: rgb(187, 132, 238);
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+    font-size: 40px;
+}
+
+p{
+    color: rgb(155, 85, 221);
+    font-size: 20px;
+}
