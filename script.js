@@ -1,7 +1,3 @@
-/* 1- Simulador para sacar turno a clases de patin artistico segun edades y cupos, esta funcion, segun cada caso, llama a otras funciones
-2- Darse de baja de las clases
-3- Recibir informacion sobre las clases*/ 
-
 let adolescentes = ["juana","delfina","maria"];
 let adultos = ["sabrina","martina","morena","eugenia","andrea","mariela","sol","abril","luz","aldana"];
 let mayores = [];
@@ -112,6 +108,7 @@ function baja(){
             }
             else{
                 alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
+                console.error("El alumno que se quiere dar de baja no se encuentra inscripto");
             }
         }
         else{
@@ -122,6 +119,7 @@ function baja(){
                 }
                 else{
                     alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
+                    console.error("El alumno que se quiere dar de baja no se encuentra inscripto");
                 }
             }
             else{
@@ -131,6 +129,7 @@ function baja(){
                 }
                 else{
                     alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
+                    console.error("El alumno que se quiere dar de baja no se encuentra inscripto");
                 }
             }
         }

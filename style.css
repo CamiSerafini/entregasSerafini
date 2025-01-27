@@ -4,7 +4,7 @@
 
 body{
     text-align: center;
-    margin-top: 330px;
+    margin-top: 280px;
 }
 
 h1{
@@ -23,5 +23,20 @@ h2{
 
 p{
     color: rgb(155, 85, 221);
+    font-size: 25px;
+    text-decoration: underline;
+}
+
+ul{
+    margin-top: 1px;
+    padding-left: 0px;
+    color: rgb(155, 85, 221);
     font-size: 20px;
+}
+
+li{
+    border: double, rgb(215, 185, 243);
+    margin-left: 590px;
+    margin-right: 590px;
+    padding-top: 0px;
 }
