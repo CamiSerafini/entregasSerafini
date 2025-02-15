@@ -1,42 +1,232 @@
-*{
-    background-color: black;
+* {
+    margin: 0px;
+  }
+
+  body {
+    background-color: #ffe0ee;
 }
 
-body{
+  header {
+    font-family: "Times New Roman", Times, serif;
+    border-bottom: 0.15rem solid #f1b9f1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  header .logo {
+    width: 10%;
     text-align: center;
-    margin-top: 280px;
+  }
+  
+  header .logo .logo-nav {
+    width: 12rem;
+    height: 12rem;
+  }
+  
+  header nav {
+    margin-right: 1rem;
+  }
+
+  header nav .list {
+    list-style-type: none;
+    text-align: center;
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+    font-size: 1.3rem;
+  }
+  
+  header nav .list .li1 {
+    margin-top: 0.8rem;
+  }
+  
+  header nav .list li {
+    margin: 0.8rem;
+    padding: 0px;
+    line-height: normal;
+  }
+  
+  header nav .list li a:hover {
+    color: #ca89ca;
+  }
+
+.center {
+    text-align: center;
 }
 
-h1{
-    color: rgb(187, 132, 238);
-    font-family: 'Times New Roman', Times, serif;
-    font-style: italic;
-    font-size: 60px;
+
+  
+a {
+    font-family: "Times New Roman", Times, serif;
+    font-weight: bolder;
+    color: #aa16ab;
+    text-align: none;
+    text-decoration-line: none;
+}
+  
+.title {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 3rem;
+    font-weight: bold;
+    color: rgba(117, 15, 117, 0.8705882353);
+    text-align: center;
+    margin: 3rem 1rem 1rem 1rem;
+}
+  
+  .subt {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: rgba(117, 15, 117, 0.8705882353);
+    text-align: center;
+  }
+  
+.profes{
+    text-align: center;
+    padding: 2rem;
 }
 
-h2{
-    color: rgb(187, 132, 238);
-    font-family: 'Times New Roman', Times, serif;
-    font-style: italic;
-    font-size: 40px;
+  .description {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.4rem;
+    font-weight: none;
+    color: #73626E;
+    text-align: justify;
+    margin: 1rem 1.5rem;
+  }
+
+  .desc{
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.4rem;
+    color: #73626E;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding: 0px 30px;
+
+  }
+  
+  .list {
+    list-style-type: none;
+    text-align: center;
+    padding: 0px;
+  }
+  
+  .flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .ocupa{
+    width: 70%;
+    margin-top: 1rem;
+    border: 0.4rem double rgb(187, 171, 171);
+  }
+
+  .img{
+    width: 40%;
+    margin-top: 1rem;
+}  
+
+.lugares{
+    padding: 10px 0px;
+    font-size: 1.5rem;
 }
 
-p{
-    color: rgb(155, 85, 221);
-    font-size: 25px;
-    text-decoration: underline;
+#eventos{
+    text-align: center;
 }
 
-ul{
-    margin-top: 1px;
-    padding-left: 0px;
-    color: rgb(155, 85, 221);
-    font-size: 20px;
+.separa{
+    margin: 15px 25px;
 }
 
-li{
-    border: double, rgb(215, 185, 243);
-    margin-left: 590px;
-    margin-right: 590px;
-    padding-top: 0px;
+.formu{
+    margin-top: 15px;
+    font-size: 1.2rem;
 }
+
+.comunicate{
+    justify-content: space-evenly;
+    padding-left: 280px;
+    padding-right: 280px;
+    margin-bottom: 30px;
+}
+
+.line{
+    display: inline;
+}
+
+form{
+    text-align: center;
+    font-size: 1.4rem;
+}
+
+.formulario{
+    margin:15px;
+}
+
+#inscripcion .desc{
+    color: rgb(117, 4, 117)
+}
+
+#ventas p{
+    color: rgb(0, 0, 0);
+}
+
+
+
+
+  footer {
+    color: #aa16ab;
+    font-size: 1rem;
+    font-family: "Times New Roman", Times, serif;
+    border-top: 0.15rem solid #f1b9f1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 0px 1.5rem;
+  }
+
+  footer .logo {
+    width: 10%;
+    text-align: center;
+  }
+
+  footer .logo .logo-nav {
+    width: 12rem;
+    height: 12rem;
+  }
+
+  footer div .seguinos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  footer div .seguinos h2 {
+    font-size: 2.2rem;
+    font-weight: bold;
+  }
+
+  footer div .seguinos .redes {
+    width: 3.5rem;
+    margin-left: 0.5rem;
+  }
+
+  footer div .center h3 {
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+
+  footer div .center .list {
+    display: flex;
+  }
+
+  footer div .center .list li {
+    font-size: 1.2rem;
+    margin: 0.6rem;
+  }
