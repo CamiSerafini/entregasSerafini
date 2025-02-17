@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -62,7 +63,7 @@
             <h2 class="subt">Equipo Técnico</h2>
             <div class="profes flex-center">
                 <img src="images/ale.jpg" alt="Alejandra Fernandez" class="img">
-                <div>  
+                <div>
                     <h3>Técnica Alejandra Fernandez</h3>
                     <p class="description">
                         Con mas de 30 años de trayectoria en enseñanza luego de dedicarse de manera
@@ -70,9 +71,9 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="profes flex-center">
-                <div>    
+                <div>
                     <h3>Melisa Lihuen Genchi</h3>
                     <p class="description">
                         Mas de 15 años enseñando este hermoso deporte junto a su madre a un gran
@@ -81,7 +82,7 @@
                 </div>
                 <img src="images/meli.jpg" alt="Melisa Genchi" class="img">
             </div>
-            
+
             <div class="center">
                 <p class="desc">
                     Juntas, madre e hija, forman un excelente staff, lleno de experiencia.
@@ -96,16 +97,19 @@
                     <li class="lugares">Florisbelo Acosta 6810 - Club Telefonos</li>
                 </ul>
             </div>
-            
 
-            
+
+
         </section>
 
         <section id="eventos">
             <h1 class="title">Eventos</h1>
             <img src="images/show.png" alt="Show fin de año" class="img separa">
             <img src="images/show2.jpeg" alt="Show fin de año" class="img separa">
-            <p class="desc">A lo largo del año vamos realizando presentaciones tanto de la escuelita como del equipo pre-competencia y compentecia. Ademas, asistimos a torneos locales de la ciudad de Mar del Plata, regionales y nacionales. Y, a fin de año tenemos el show final para poder demostrar todo lo aprendido y que mejor que en equipo</p>
+            <p class="desc">A lo largo del año vamos realizando presentaciones tanto de la escuelita como del equipo
+                pre-competencia y compentecia. Ademas, asistimos a torneos locales de la ciudad de Mar del Plata,
+                regionales y nacionales. Y, a fin de año tenemos el show final para poder demostrar todo lo aprendido y
+                que mejor que en equipo</p>
             <img src="images/torneolocal.jpeg" alt="Torneo local" class="img separa">
             <img src="images/torneolocal2.jpeg" alt="Torneo local" class="img separa">
             <p class="desc">Estas son imagenes de dos de los muchos torneos en el año que hemos asistido</p>
@@ -116,7 +120,7 @@
                 <a href="#inscripcion">Haciendo click aqui y llenando el formulario</a>
             </div>
         </section>
-        
+
         <section id="contacto">
             <h1 class="title text-center">Comunicate con nosotros</h1>
             <div class="flex-center comunicate">
@@ -132,7 +136,7 @@
             </div>
             <div class="flex-center comunicate">
                 <a href="https://www.instagram.com/amteampatin/" target="_blank"><img src="images/instagram.png"
-                    alt="Instagram" class="redes"></a>
+                        alt="Instagram" class="redes"></a>
                 <p>Mediante instagram y ¡seguinos!</p>
             </div>
             <div class="desc">
@@ -142,55 +146,52 @@
 
         <section id="inscripcion">
             <h1 class="title">Inscripciones</h1>
-            <div>
-                <p class="desc">Si estas interesada en que nos comuniquemos para probar una clase gratis por favor completar el siguiente formulario</p>
-                <form action="login.php" method="post">
+            <div id="inscripcionCorrecta">
+                <p class="desc">Si estas interesada en que nos comuniquemos para probar una clase gratis por favor
+                    completar el siguiente formulario</p>
+                <form id="formu-js">
                     <div class="formulario">
                         <label for="nombre">Nombre</label>
-                        <input type="text" id="nombre" name="nombre" required>   
+                        <input type="text" id="nombre" name="nombre" required>
                     </div>
                     <div class="formulario">
                         <label for="apellido">Apellido</label>
-                        <input type="text" id="apellido" name="apellido" required>    
+                        <input type="text" id="apellido" name="apellido" required>
                     </div>
                     <div class="formulario">
                         <p class="line">Edad de quien tomaría las clases</p>
-                        <select name="edad">
-                            <option value="escuelita">4 a 8 años</option>
-                            <option value="pequeños">9 a 14 años</option>
-                            <option value="adolescentes">15 a 20 años</option>
-                            <option value="adultos">21 a 40 años</option>
-                            <option value="Mayores">36 a 60 años</option>
-                            <option value="otros">Otro</option>
-                        </select>
+                        <label for="edad">Edad</label>
+                        <input type="number" id="edad" name="edad" required>
                     </div>
                     <div class="formulario">
                         <label for="correo">Correo electrónico</label>
-                        <input type="email" id="correo" name="correo" required>    
+                        <input type="email" id="correo" name="correo" required>
                     </div>
                     <div class="formulario">
                         <label for="telefono">Telefono</label>
-                        <input type="tel" id="telefono" name="telefono" required>    
+                        <input type="tel" id="telefono" name="telefono" required>
                     </div>
                     <input type="submit" value="Enviar" class="enviar">
                 </form>
             </div>
             <div>
-                <p class="desc">Si queres saber un poco mas sobre nuestras clases dejanos tu numero a continuacion y nosotros nos comunicamos a la brevedad</p>
+                <p class="desc"> Si aun no queres inscribirte pero si queres saber un poco mas sobre nuestras clases dejanos tu numero a continuacion y
+                    nosotros nos comunicamos a la brevedad</p>
                 <form action="login.php" method="post">
                     <div class="formulario">
                         <label for="celular">Numero de telefono</label>
-                        <input type="tel" id="celular" name="celular">    
+                        <input type="tel" id="celular" name="celular">
                     </div>
                     <input type="submit" value="Enviar" class="enviar">
                 </form>
             </div>
 
-            
+
         </section>
 
         <section id="ventas">
             <h1 class="title">Accesorios</h1>
+            <h2 class="subt">¡Proximamente!</h2>
             <p class="desc">Dentro de poco estaremos mostrando todo lo que tenemos para ofrecerte, entre ellos...</p>
             <ul class="list">
                 <li class="lugares">Bolsos de patin</li>
@@ -230,4 +231,5 @@
 
     <!-- <script src="script.js"></script> -->
 </body>
+
 </html>
