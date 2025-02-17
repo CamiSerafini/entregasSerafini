@@ -236,3 +236,25 @@ footer div .center .list li {
     font-size: 1.2rem;
     margin: 0.6rem;
 }
+
+/*--------------------JAVA SCRIPT--------------------*/
+
+.desc-2 {
+    color: red;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding: 0px 30px;
+}
+
+.desc-3 {
+    color: green;
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    padding: 0px 30px;
+}

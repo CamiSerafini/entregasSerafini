@@ -1,96 +1,96 @@
 let adolescentes = [
     {
-        nombre:"juana",
-        apellido:"barrios",
+        nombre: "juana",
+        apellido: "barrios",
         edad: 16,
-        correo:"juanabarrios2@gmail.com",
+        correo: "juanabarrios2@gmail.com",
         telefono: 223573839
     },
     {
-        nombre:"delfina",
-        apellido:"juarez",
+        nombre: "delfina",
+        apellido: "juarez",
         edad: 15,
-        correo:"delfit@gmail.com",
+        correo: "delfit@gmail.com",
         telefono: 223573848
     },
     {
-        nombre:"maria",
-        apellido:"solani",
+        nombre: "maria",
+        apellido: "solani",
         edad: 18,
-        correo:"smaria20@gmail.com",
+        correo: "smaria20@gmail.com",
         telefono: 223570659
     }
 ];
 
 let adultos = [
     {
-        nombre:"sabrina",
-        apellido:"sult",
+        nombre: "sabrina",
+        apellido: "sult",
         edad: 22,
-        correo:"sabrisult@gmail.com",
+        correo: "sabrisult@gmail.com",
         telefono: 223578839
     },
     {
-        nombre:"martina",
-        apellido:"terranova",
+        nombre: "martina",
+        apellido: "terranova",
         edad: 32,
-        correo:"martaterra@gmail.com",
+        correo: "martaterra@gmail.com",
         telefono: 223579732
     },
     {
-        nombre:"morena",
-        apellido:"hernandez",
+        nombre: "morena",
+        apellido: "hernandez",
         edad: 29,
-        correo:"morehernandez@gmail.com",
+        correo: "morehernandez@gmail.com",
         telefono: 2235997439
     },
     {
-        nombre:"eugenia",
-        apellido:"rosales",
+        nombre: "eugenia",
+        apellido: "rosales",
         edad: 20,
-        correo:"rosaleseuge@gmail.com",
+        correo: "rosaleseuge@gmail.com",
         telefono: 223958572
     },
     {
-        nombre:"andrea",
-        apellido:"ventra",
+        nombre: "andrea",
+        apellido: "ventra",
         edad: 40,
-        correo:"ventrandre@gmail.com",
+        correo: "ventrandre@gmail.com",
         telefono: 223573065
     },
     {
-        nombre:"mariela",
-        apellido:"molina",
+        nombre: "mariela",
+        apellido: "molina",
         edad: 38,
-        correo:"molimari@gmail.com",
+        correo: "molimari@gmail.com",
         telefono: 223573234
     },
     {
-        nombre:"sol",
-        apellido:"avenado",
+        nombre: "sol",
+        apellido: "avenado",
         edad: 27,
-        correo:"avenadosolcito@gmail.com",
+        correo: "avenadosolcito@gmail.com",
         telefono: 223532432
     },
     {
-        nombre:"abril",
-        apellido:"ardona",
+        nombre: "abril",
+        apellido: "ardona",
         edad: 24,
-        correo:"ardonaabru@gmail.com",
+        correo: "ardonaabru@gmail.com",
         telefono: 223523425
     },
     {
-        nombre:"luz",
-        apellido:"solpa",
+        nombre: "luz",
+        apellido: "solpa",
         edad: 26,
-        correo:"solpaluz@gmail.com",
+        correo: "solpaluz@gmail.com",
         telefono: 223573823
     },
     {
-        nombre:"aldana",
-        apellido:"rodas",
+        nombre: "aldana",
+        apellido: "rodas",
         edad: 35,
-        correo:"rodasaldi@gmail.com",
+        correo: "rodasaldi@gmail.com",
         telefono: 223574563
     }
 ];
@@ -105,89 +105,98 @@ function disponibilidad(cupos) {
     }
 }
 
-function mensajeInscripcion(num) {
+function mensajeInscripcion(num, no, mensaje) {
     if (num) {
-        let correcta = document.getElementById("inscripcionCorrecta");
-        let inscrCorrecta = document.createElement("p");
-        inscrCorrecta.textContent = "Inscripcion exitosa, estaremos publicando las fechas de comienzo";
-        correcta.appendChild(inscrCorrecta);
-        //alert("Inscripcion exitosa, estaremos publicando las fechas de comienzo");
-        //console.log("Se ha añadido a un alumno nuevo");
+        mensaje.textContent = "Inscripcion exitosa, estaremos publicando las fechas de comienzo";
+        mensaje.className = "desc-3";
     } else {
-        //alert("Lo sentimos, el cupo está completo");
-        //console.error("No se ha podido inscribir por falta de cupos");
-        let incorrecta = document.getElementById("inscripcionCorrecta");
-        let inscrIncorrecta = document.createElement("p");
-        inscrIncorrecta.textContent = "No se ha podido inscribir por falta de cupos";
-        incorrecta.appendChild(inscrCorrecta);
+        mensaje.textContent = "No se ha podido inscribir por falta de cupos";
+        mensaje.className = "desc-2";
     }
-
+    no.appendChild(mensaje);
 }
 
+let datosGuardados = [];
+
 function sacarTurno() {
-        let edad = document.getElementById("edad").value;
-        //let edad = prompt("Inscripción persona " + j + " - Ingrese su edad");
-        parseInt(edad);
-        if (edad < 4 || edad > 60) {
-            let no = document.getElementById("inscripcionCorrecta");
-            console.log(no);
-            if(no){
-                console.log("Existe");
+    let edad = document.getElementById("edad").value;
+    edad = parseInt(edad);
+    let no = document.getElementById("inscripcionCorrecta");
+    let mensaje = document.createElement("p");
+    let nuevoIngreso = {};
+    nuevoIngreso.nombre = (document.getElementById("nombre").value).toLowerCase();
+    nuevoIngreso.apellido = (document.getElementById("apellido").value).toLowerCase();
+    nuevoIngreso.edad = edad;
+    nuevoIngreso.correo = document.getElementById("correo").value;
+    nuevoIngreso.telefono = document.getElementById("telefono").value;
+    //Los datos se guardaran en el local storage en cualquier caso para tener un registro de todos los contactos
+    datosGuardados.push(nuevoIngreso);
+    if (edad < 4 || edad > 60) {
+        mensaje.textContent = "Lo sentimos, no disponemos de clases para la edad ingresada";
+        mensaje.className = "desc-2";
+        no.appendChild(mensaje);
+    }
+    else {
+        if (edad < 19) {
+            if (disponibilidad(adolescentes)) {
+                adolescentes.push(nuevoIngreso);
+                mensajeInscripcion(1, no, mensaje);
             }
-            else{
-                console.log("No existe");
+            else {
+                mensajeInscripcion(0, no, mensaje);
             }
-            let noHayClases = document.createElement("p");
-            noHayClases.textContent = "Lo sentimos, no disponemos de clases para la edad ingresada";
-            noHayClases.className = "description";
-            no.appendChild(noHayClases);
-            //alert("Lo sentimos, no disponemos de clases para la edad ingresada");
-            //console.error("Edad no aceptada");
         }
         else {
-            if (edad < 19) {
-                if (disponibilidad(adolescentes)) {
-                    adolescentes.push({
-                        nombre : (document.getElementById("nombre").value).toLowerCase(),
-                        apellido : (document.getElementById("apellido").value).toLowerCase(),
-                        edad : edad,
-                        correo : document.getElementById("correo").value,
-                        telefono : document.getElementById("telefono").value
-                    });
-                    
-
-                    
-                    mensajeInscripcion(1);
+            if (edad < 41) {
+                if (disponibilidad(adultos)) {
+                    adultos.push(nuevoIngreso);
+                    mensajeInscripcion(1, no, mensaje);
                 }
                 else {
-                    mensajeInscripcion(0);
+                    mensajeInscripcion(0, no, mensaje);
                 }
             }
             else {
-                if (edad < 41) {
-                    if (disponibilidad(adultos)) {
-                        let nombre = pedirNombre();
-                        adultos.push(nombre);
-                        mensajeInscripcion(1);
-                    }
-                    else {
-                        mensajeInscripcion(0);
-                    }
+                if (disponibilidad(mayores)) {
+                    mayores.push(nuevoIngreso);
+                    mensajeInscripcion(1, no, mensaje);
                 }
                 else {
-                    if (disponibilidad(mayores)) {
-                        let nombre = pedirNombre();
-                        mayores.push(nombre);
-                        mensajeInscripcion(1);
-                    }
-                    else {
-                        mensajeInscripcion(0);
-                    }
+                    mensajeInscripcion(0, no, mensaje);
                 }
             }
-
         }
 
+    }
+
+    let formulario = document.getElementById("formuJs");
+
+    function habilitarFormulario() {
+        formulario.reset();
+
+        const inputs = formulario.querySelectorAll("input");
+        inputs.forEach(input => input.disabled = false);
+
+        no.removeChild(recargar);
+        no.removeChild(mensaje);
+        no.removeChild(confirmo);
+    }
+
+    let recargar = document.createElement("button");
+    recargar.textContent = "¿Quiere cargar otros datos?";
+    no.appendChild(recargar);
+    recargar.addEventListener("click",habilitarFormulario);
+
+    let confirmo = document.createElement("button");
+    confirmo.textContent = "Confirmo";
+    no.appendChild(confirmo);
+    confirmo.addEventListener("click",function(){
+        formulario.reset();
+        localStorage.setItem("Datos",JSON.stringify(datosGuardados))
+        no.removeChild(recargar);
+        no.removeChild(mensaje);
+        no.removeChild(confirmo);
+    });
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -271,9 +280,15 @@ const informacion = () => {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
-sacarTurno();
+document.getElementById("formuJs").addEventListener("submit", function (event) {
+    event.preventDefault(); // Evita la recarga de la página
+    console.log("Formulario enviado correctamente"); // Verificar si el formulario se envió
+    sacarTurno();
+});
 
-let confirmar = confirm("¿Esta seguro que quiere darse de baja?");
+
+
+/*let confirmar = confirm("¿Esta seguro que quiere darse de baja?");
 if (confirmar) {
     baja();
 }
@@ -282,4 +297,4 @@ else {
     console.log("El alumno ha decido continuar con la clase");
 }
 
-informacion();
+informacion();*/
