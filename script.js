@@ -116,6 +116,14 @@ function mensajeInscripcion(num, no, mensaje) {
     no.appendChild(mensaje);
 }
 
+function ingresante(edad){
+    this.nombre=(document.getElementById("nombre").value).toLowerCase();
+    this.apellido=(document.getElementById("apellido").value).toLowerCase();
+    this.edad=edad;
+    this.correo=document.getElementById("correo").value;
+    this.telefono=document.getElementById("telefono").value;
+}
+
 let datosGuardados = [];
 
 function sacarTurno() {
@@ -123,12 +131,7 @@ function sacarTurno() {
     edad = parseInt(edad);
     let no = document.getElementById("inscripcionCorrecta");
     let mensaje = document.createElement("p");
-    let nuevoIngreso = {};
-    nuevoIngreso.nombre = (document.getElementById("nombre").value).toLowerCase();
-    nuevoIngreso.apellido = (document.getElementById("apellido").value).toLowerCase();
-    nuevoIngreso.edad = edad;
-    nuevoIngreso.correo = document.getElementById("correo").value;
-    nuevoIngreso.telefono = document.getElementById("telefono").value;
+    let nuevoIngreso = new ingresante(edad);
     //Los datos se guardaran en el local storage en cualquier caso para tener un registro de todos los contactos
     datosGuardados.push(nuevoIngreso);
     if (edad < 4 || edad > 60) {
@@ -200,69 +203,119 @@ function sacarTurno() {
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
+function noInfo(nombre, apellido){
+    datosGuardados = JSON.parse(localStorage.getItem("Datos"));
+    const posicion = datosGuardados.findIndex(dato => dato.nombre === nombre && dato.apellido === apellido);
+    datosGuardados.splice(posicion, 1);
+    localStorage.setItem("Datos",JSON.stringify(datosGuardados)); 
+}
 
-function buscar(alumnos, nombre) {
-    let i = 0;
-    if (alumnos.length > 0) {
-        while (i < alumnos.length && alumnos[i] != nombre) {
-            i++;
-        }
-        if (alumnos[i] != nombre) {
-            return 0;
-        }
-        else {
-            alert("Ha sido eliminado de la lista, " + nombre + " ¡esperamos verte de nuevo!");
-            console.log("Alumno eliminado, se desocupa una vacante");
-            return i;
-        }
-    }
+function noRecibir(nombre, apellido){
+    let contacto = document.createElement("div");
+    contacto.innerHTML = `
+    <p>Si no quieres recibir mas informacion haz click en el siguiente boton</p>
+    <button id="noRec">No recibir</button>
+    `;
+    formularioBaja.appendChild(contacto);
+    let borrar = document.getElementById("noRec");
+    borrar.addEventListener("click",noInfo(nombre, apellido));
 }
 
 function baja() {
-    let nombre = pedirNombre();
-    let edad = prompt("Tambien solicitamos su edad");
+    let nombre = (document.getElementById("nombreBaja").value).toLowerCase();
+    let apellido = (document.getElementById("apellidoBaja").value).toLowerCase();
+    let edad = parseInt(document.getElementById("edadBaja").value);
+
+    let elimina = document.createElement("p");
+    let n=0;
+
     if (edad < 4 || edad > 60) {
-        alert("Usted no se encuentra inscripto ya que no disponemos clases para esa edad");
-        console.error("Persona no inscripta");
+        elimina.textContent = "Usted no se encuentra inscripto ya que no disponemos clases para esa edad";
     }
     else {
         if (edad < 19) {
-            let posicion = buscar(adolescentes, nombre);
-            if (posicion != 0) {
+            const posicion = adolescentes.findIndex(adol => adol.nombre === nombre && adol.apellido === apellido);
+            if(posicion>=0){
                 adolescentes.splice(posicion, 1);
+                elimina.textContent = "Eliminado correctamente";
+                n=1;
             }
-            else {
-                alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
-                console.error("El alumno que se quiere dar de baja no se encuentra inscripto");
+            else{
+                elimina.textContent = "Usted no se encuentra inscripto";
             }
         }
-        else {
+        else{
             if (edad < 41) {
-                let posicion = buscar(adultos, nombre);
-                if (posicion != 0) {
+                const posicion = adultos.findIdex(adult => adult.nombre === nombre && adult.apellido === apellido);
+                if(posicion){
                     adultos.splice(posicion, 1);
+                    elimina.textContent = "Eliminado correctamente";
+                    n=1;
                 }
-                else {
-                    alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
-                    console.error("El alumno que se quiere dar de baja no se encuentra inscripto");
+                else{
+                    elimina.textContent = "Usted no se encuentra inscripto";
                 }
             }
             else {
-                let posicion = buscar(mayores, nombre);
-                if (posicion != 0) {
+                const posicion = mayores.findIdex(may => may.nombre === nombre && may.apellido === apellido);
+                if(posicion){
                     mayores.splice(posicion, 1);
+                    elimina.textContent = "Eliminado correctamente";
+                    n=1;
                 }
-                else {
-                    alert("Usted no se encuentra inscripto, verifique si los datos son correctos y vuelva a intentar");
-                    console.error("El alumno que se quiere dar de baja no se encuentra inscripto");
+                else{
+                    elimina.textContent = "Usted no se encuentra inscripto";
                 }
             }
         }
+    }
+    formularioBaja.appendChild(elimina);
+    if(n==1){
+        noRecibir(nombre, apellido);
     }
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+//SACAR TURNO - 1ER FUNCION
+document.getElementById("formuJs").addEventListener("submit", function (event) {
+    event.preventDefault(); // Evita la recarga de la página
+    console.log("Formulario enviado correctamente"); // Verificar si el formulario se envió
+    sacarTurno();
+});
+
+//DARSE DE BAJA - 2DA FUNCION
+let botonBaja = document.getElementById("botonBaja");
+let bajaTeam = document.getElementById("baja"); 
+let formularioBaja = document.createElement("form");
+formularioBaja.id="formuBaja";
+botonBaja.addEventListener("click",function(){
+    formularioBaja.innerHTML=`        
+        <label for="nombreBaja">Nombre</label>
+        <input type="text" id="nombreBaja" name="nombre" class="baja" required>
+        <label for="apellidoBaja">Apellido</label>
+        <input type="text" id="apellidoBaja" name="apellido" class="baja" required>
+        <label for="edadBaja">Edad</label>
+        <input type="numeric" id="edadBaja" name="edad" class="baja" required>
+        <button type="submit">Enviar</button>`
+});
+
+bajaTeam.appendChild(formularioBaja);
+
+document.getElementById("formuBaja").addEventListener("submit", function (event) {
+    event.preventDefault(); // Evita la recarga de la página
+    console.log("Formulario enviado correctamente"); // Verificar si el formulario se envió
+    baja();
+});
+
+//NO RECIBIR INFORMACION - 3ER FUNCION
+//En combinacion con la segunda funcion
+
+
+
+/*
+informacion();
 const informacion = () => {
     let asegurar = false;
     let telefono = prompt("Para recibir información por favor ingrese su numero de telefono y a la brevedad nos estaremos comunicando");
@@ -276,25 +329,4 @@ const informacion = () => {
         }
     }
     console.log("Enviar informacion a " + telefono);
-}
-
-//-----------------------------------------------------------------------------------------------------------------------------------------------------
-
-document.getElementById("formuJs").addEventListener("submit", function (event) {
-    event.preventDefault(); // Evita la recarga de la página
-    console.log("Formulario enviado correctamente"); // Verificar si el formulario se envió
-    sacarTurno();
-});
-
-
-
-/*let confirmar = confirm("¿Esta seguro que quiere darse de baja?");
-if (confirmar) {
-    baja();
-}
-else {
-    alert("Nos alegra que continues con nuestras clases");
-    console.log("El alumno ha decido continuar con la clase");
-}
-
-informacion();*/
+}*/

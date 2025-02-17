@@ -63,7 +63,7 @@ header nav .list li a:hover {
 
 
 
-a {
+header a {
     font-family: "Times New Roman", Times, serif;
     font-weight: bolder;
     color: #aa16ab;
@@ -106,11 +106,18 @@ a {
     text-align: center;
     font-family: "Times New Roman", Times, serif;
     font-size: 1.4rem;
-    color: #73626E;
-    margin-bottom: 15px;
-    margin-top: 15px;
+    margin-bottom: 25px;
+    margin-top: 25px;
     padding: 0px 30px;
+}
 
+.desc a{
+    color: rgb(117, 4, 117);
+}
+
+.desc h4{
+    margin-bottom: 25px;
+    margin-top: 25px;
 }
 
 .list {
@@ -176,7 +183,7 @@ form {
 }
 
 #inscripcion .desc {
-    color: rgb(117, 4, 117)
+    color: rgb(117, 4, 117);
 }
 
 #ventas p {
