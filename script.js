@@ -116,12 +116,12 @@ function mensajeInscripcion(num, no, mensaje) {
     no.appendChild(mensaje);
 }
 
-function ingresante(edad){
-    this.nombre=(document.getElementById("nombre").value).toLowerCase();
-    this.apellido=(document.getElementById("apellido").value).toLowerCase();
-    this.edad=edad;
-    this.correo=document.getElementById("correo").value;
-    this.telefono=document.getElementById("telefono").value;
+function ingresante(edad) {
+    this.nombre = (document.getElementById("nombre").value).toLowerCase();
+    this.apellido = (document.getElementById("apellido").value).toLowerCase();
+    this.edad = edad;
+    this.correo = document.getElementById("correo").value;
+    this.telefono = document.getElementById("telefono").value;
 }
 
 let datosGuardados = [];
@@ -186,16 +186,18 @@ function sacarTurno() {
     }
 
     let recargar = document.createElement("button");
+    recargar.className = "botonCentro";
     recargar.textContent = "¿Quiere cargar otros datos?";
     no.appendChild(recargar);
-    recargar.addEventListener("click",habilitarFormulario);
+    recargar.addEventListener("click", habilitarFormulario);
 
     let confirmo = document.createElement("button");
     confirmo.textContent = "Confirmo";
+    confirmo.className = "botonCentro";
     no.appendChild(confirmo);
-    confirmo.addEventListener("click",function(){
+    confirmo.addEventListener("click", function () {
         formulario.reset();
-        localStorage.setItem("Datos",JSON.stringify(datosGuardados))
+        localStorage.setItem("Datos", JSON.stringify(datosGuardados))
         no.removeChild(recargar);
         no.removeChild(mensaje);
         no.removeChild(confirmo);
@@ -203,76 +205,81 @@ function sacarTurno() {
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
-function noInfo(nombre, apellido){
-    datosGuardados = JSON.parse(localStorage.getItem("Datos"));
-    const posicion = datosGuardados.findIndex(dato => dato.nombre === nombre && dato.apellido === apellido);
-    datosGuardados.splice(posicion, 1);
-    localStorage.setItem("Datos",JSON.stringify(datosGuardados)); 
-}
 
-function noRecibir(nombre, apellido){
-    let contacto = document.createElement("div");
-    contacto.innerHTML = `
-    <p>Si no quieres recibir mas informacion haz click en el siguiente boton</p>
-    <button id="noRec">No recibir</button>
-    `;
+function noRecibir(nombre, apellido) {
+    let contacto = document.createElement("button");
+    contacto.textContent = `Para no recibir mas informacion haga click aqui`;
     formularioBaja.appendChild(contacto);
-    let borrar = document.getElementById("noRec");
-    borrar.addEventListener("click",noInfo(nombre, apellido));
+    contacto.addEventListener("click", function (event) {
+        event.preventDefault();
+        console.log("Formulario enviado sin recargar la página");
+        datosGuardados = JSON.parse(localStorage.getItem("Datos"));
+        const posicion = datosGuardados.findIndex(dato => dato.nombre === nombre && dato.apellido === apellido);
+        if (posicion >= 1) {
+            datosGuardados.splice(posicion, 1);
+            localStorage.setItem("Datos", JSON.stringify(datosGuardados));
+        }
+        let regreso = document.createElement("p");
+        regreso.textContent = `Que pena. Esperamos verte nuevamente. En breve se reiniciará la pagina`;
+        formularioBaja.appendChild(regreso);
+        setTimeout(function () {
+            location.reload(); // Recarga la página
+        }, 3000);
+    });
 }
 
 function baja() {
     let nombre = (document.getElementById("nombreBaja").value).toLowerCase();
     let apellido = (document.getElementById("apellidoBaja").value).toLowerCase();
     let edad = parseInt(document.getElementById("edadBaja").value);
-
     let elimina = document.createElement("p");
-    let n=0;
+    let posicion;
 
     if (edad < 4 || edad > 60) {
         elimina.textContent = "Usted no se encuentra inscripto ya que no disponemos clases para esa edad";
     }
     else {
         if (edad < 19) {
-            const posicion = adolescentes.findIndex(adol => adol.nombre === nombre && adol.apellido === apellido);
-            if(posicion>=0){
+            posicion = adolescentes.findIndex(adol => adol.nombre === nombre && adol.apellido === apellido);
+            console.log(posicion);
+            if (posicion >= 0) {
                 adolescentes.splice(posicion, 1);
                 elimina.textContent = "Eliminado correctamente";
-                n=1;
             }
-            else{
+            else {
                 elimina.textContent = "Usted no se encuentra inscripto";
             }
         }
-        else{
+        else {
             if (edad < 41) {
-                const posicion = adultos.findIdex(adult => adult.nombre === nombre && adult.apellido === apellido);
-                if(posicion){
+                posicion = adultos.findIndex(adult => adult.nombre === nombre && adult.apellido === apellido);
+                if (posicion >= 0) {
                     adultos.splice(posicion, 1);
                     elimina.textContent = "Eliminado correctamente";
-                    n=1;
+
                 }
-                else{
+                else {
                     elimina.textContent = "Usted no se encuentra inscripto";
                 }
             }
             else {
-                const posicion = mayores.findIdex(may => may.nombre === nombre && may.apellido === apellido);
-                if(posicion){
+                posicion = mayores.findIndex(may => may.nombre === nombre && may.apellido === apellido);
+                if (posicion >= 0) {
                     mayores.splice(posicion, 1);
                     elimina.textContent = "Eliminado correctamente";
-                    n=1;
                 }
-                else{
+                else {
                     elimina.textContent = "Usted no se encuentra inscripto";
                 }
             }
         }
     }
+    rep = 1;
     formularioBaja.appendChild(elimina);
-    if(n==1){
+    if (posicion >= 0) {
         noRecibir(nombre, apellido);
     }
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
@@ -280,18 +287,17 @@ function baja() {
 
 //SACAR TURNO - 1ER FUNCION
 document.getElementById("formuJs").addEventListener("submit", function (event) {
-    event.preventDefault(); // Evita la recarga de la página
-    console.log("Formulario enviado correctamente"); // Verificar si el formulario se envió
+    event.preventDefault(); // Evita que se recargue la pagina al enviar el formulario
     sacarTurno();
 });
 
 //DARSE DE BAJA - 2DA FUNCION
 let botonBaja = document.getElementById("botonBaja");
-let bajaTeam = document.getElementById("baja"); 
+let bajaTeam = document.getElementById("baja");
 let formularioBaja = document.createElement("form");
-formularioBaja.id="formuBaja";
-botonBaja.addEventListener("click",function(){
-    formularioBaja.innerHTML=`        
+formularioBaja.id = "formuBaja";
+botonBaja.addEventListener("click", function () {
+    formularioBaja.innerHTML = `        
         <label for="nombreBaja">Nombre</label>
         <input type="text" id="nombreBaja" name="nombre" class="baja" required>
         <label for="apellidoBaja">Apellido</label>
@@ -303,30 +309,12 @@ botonBaja.addEventListener("click",function(){
 
 bajaTeam.appendChild(formularioBaja);
 
+//AL DARSE DE BAJA, ¿QUIERE SEGUIR RECIBIENDO INFORMACIÓN? - 3ER FUNCION
+let rep = 0;
+
 document.getElementById("formuBaja").addEventListener("submit", function (event) {
-    event.preventDefault(); // Evita la recarga de la página
-    console.log("Formulario enviado correctamente"); // Verificar si el formulario se envió
-    baja();
-});
-
-//NO RECIBIR INFORMACION - 3ER FUNCION
-//En combinacion con la segunda funcion
-
-
-
-/*
-informacion();
-const informacion = () => {
-    let asegurar = false;
-    let telefono = prompt("Para recibir información por favor ingrese su numero de telefono y a la brevedad nos estaremos comunicando");
-    while (!asegurar) {
-        asegurar = confirm("El numero ingresado fue " + telefono + " ¿Es correcto?");
-        if (!asegurar) {
-            telefono = prompt("Por favor vuelva a ingresar su telefono");
-        }
-        else {
-            asegurar = true;
-        }
+    if (rep == 0) {
+        event.preventDefault();
+        baja();
     }
-    console.log("Enviar informacion a " + telefono);
-}*/
+});

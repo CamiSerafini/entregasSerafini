@@ -111,11 +111,11 @@ header a {
     padding: 0px 30px;
 }
 
-.desc a{
+.desc a {
     color: rgb(117, 4, 117);
 }
 
-.desc h4{
+.desc h4 {
     margin-bottom: 25px;
     margin-top: 25px;
 }
@@ -264,4 +264,18 @@ footer div .center .list li {
     margin-bottom: 15px;
     margin-top: 15px;
     padding: 0px 30px;
+}
+
+.botonCentro {
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 15px;
+}
+
+button {
+    background-color: rgb(221, 194, 221);
+    border: 1px solid rgb(117, 4, 117);
+    padding: 5px;
+    border-radius: 3px;
+    margin-bottom: 20px;
 }
