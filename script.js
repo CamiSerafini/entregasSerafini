@@ -97,14 +97,6 @@ let adultos = [
 
 let mayores = [];
 
-function disponibilidad(cupos) {
-    if (cupos.length < 10) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
-
 let datosGuardados = [];
 
 //GUARDAR LOS DATOS QUE YA TENGO EN LOS VECTORES EN datosGuardados para incluir todo luego en localStorage, no solo los nuevos ingresos
@@ -122,6 +114,14 @@ function cargaAlumnos() {
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+function disponibilidad(cupos) {
+    if (cupos.length < 10) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
 
 function mensajeInscripcion(num, no, mensaje) {
     if (num) {
