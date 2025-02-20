@@ -71,6 +71,17 @@ header a {
     text-decoration-line: none;
 }
 
+.subir {
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    text-decoration: none;
+    color: black;
+    border: 1px black solid;
+    background-color: white;
+    padding: 2px;
+}
+
 .title {
     font-family: "Times New Roman", Times, serif;
     font-size: 3rem;

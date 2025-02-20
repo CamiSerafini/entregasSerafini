@@ -105,6 +105,24 @@ function disponibilidad(cupos) {
     }
 }
 
+let datosGuardados = [];
+
+//GUARDAR LOS DATOS QUE YA TENGO EN LOS VECTORES EN datosGuardados para incluir todo luego en localStorage, no solo los nuevos ingresos
+function cargaAlumnos() {
+    for (let i = 0; i < adolescentes.length; i++) {
+        datosGuardados.push(adolescentes[i]);
+    }
+    for (let i = 0; i < adultos.length; i++) {
+        datosGuardados.push(adultos[i]);
+    }
+    for (let i = 0; i < mayores.length; i++) {
+        datosGuardados.push(mayores[i]);
+    }
+    localStorage.setItem("Datos", JSON.stringify(datosGuardados));
+}
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
 function mensajeInscripcion(num, no, mensaje) {
     if (num) {
         mensaje.textContent = "Inscripcion exitosa, estaremos publicando las fechas de comienzo";
@@ -124,8 +142,6 @@ function ingresante(edad) {
     this.telefono = document.getElementById("telefono").value;
 }
 
-let datosGuardados = [];
-
 function sacarTurno() {
     let edad = document.getElementById("edad").value;
     edad = parseInt(edad);
@@ -133,7 +149,9 @@ function sacarTurno() {
     let mensaje = document.createElement("p");
     let nuevoIngreso = new ingresante(edad);
     //Los datos se guardaran en el local storage en cualquier caso para tener un registro de todos los contactos
+    datosGuardados = JSON.parse(localStorage.getItem("Datos"));
     datosGuardados.push(nuevoIngreso);
+    localStorage.setItem("Datos", JSON.stringify(datosGuardados));
     if (edad < 4 || edad > 60) {
         mensaje.textContent = "Lo sentimos, no disponemos de clases para la edad ingresada";
         mensaje.className = "desc-2";
@@ -197,7 +215,6 @@ function sacarTurno() {
     no.appendChild(confirmo);
     confirmo.addEventListener("click", function () {
         formulario.reset();
-        localStorage.setItem("Datos", JSON.stringify(datosGuardados))
         no.removeChild(recargar);
         no.removeChild(mensaje);
         no.removeChild(confirmo);
@@ -206,25 +223,28 @@ function sacarTurno() {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
+function refrescarPagina() {
+    setTimeout(function () {
+        location.reload(); // Recarga la página
+    }, 3000);
+}
+
 function noRecibir(nombre, apellido) {
     let contacto = document.createElement("button");
     contacto.textContent = `Para no recibir mas informacion haga click aqui`;
     formularioBaja.appendChild(contacto);
     contacto.addEventListener("click", function (event) {
         event.preventDefault();
-        console.log("Formulario enviado sin recargar la página");
         datosGuardados = JSON.parse(localStorage.getItem("Datos"));
         const posicion = datosGuardados.findIndex(dato => dato.nombre === nombre && dato.apellido === apellido);
-        if (posicion >= 1) {
+        if (posicion >= 0) {
             datosGuardados.splice(posicion, 1);
             localStorage.setItem("Datos", JSON.stringify(datosGuardados));
         }
         let regreso = document.createElement("p");
         regreso.textContent = `Que pena. Esperamos verte nuevamente. En breve se reiniciará la pagina`;
         formularioBaja.appendChild(regreso);
-        setTimeout(function () {
-            location.reload(); // Recarga la página
-        }, 3000);
+        refrescarPagina();
     });
 }
 
@@ -237,17 +257,18 @@ function baja() {
 
     if (edad < 4 || edad > 60) {
         elimina.textContent = "Usted no se encuentra inscripto ya que no disponemos clases para esa edad";
+        refrescarPagina();
     }
     else {
         if (edad < 19) {
             posicion = adolescentes.findIndex(adol => adol.nombre === nombre && adol.apellido === apellido);
-            console.log(posicion);
             if (posicion >= 0) {
                 adolescentes.splice(posicion, 1);
                 elimina.textContent = "Eliminado correctamente";
             }
             else {
                 elimina.textContent = "Usted no se encuentra inscripto";
+                refrescarPagina();
             }
         }
         else {
@@ -260,6 +281,7 @@ function baja() {
                 }
                 else {
                     elimina.textContent = "Usted no se encuentra inscripto";
+                    refrescarPagina();
                 }
             }
             else {
@@ -270,6 +292,7 @@ function baja() {
                 }
                 else {
                     elimina.textContent = "Usted no se encuentra inscripto";
+                    refrescarPagina();
                 }
             }
         }
@@ -284,14 +307,21 @@ function baja() {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
+//Inicializar "Base de Datos"
+cargaAlumnos();
+
 
 //SACAR TURNO - 1ER FUNCION
+
 document.getElementById("formuJs").addEventListener("submit", function (event) {
     event.preventDefault(); // Evita que se recargue la pagina al enviar el formulario
     sacarTurno();
 });
 
+
 //DARSE DE BAJA - 2DA FUNCION
+//AL DARSE DE BAJA, ¿QUIERE SEGUIR RECIBIENDO INFORMACIÓN? - 3ER FUNCION
+
 let botonBaja = document.getElementById("botonBaja");
 let bajaTeam = document.getElementById("baja");
 let formularioBaja = document.createElement("form");
@@ -309,7 +339,6 @@ botonBaja.addEventListener("click", function () {
 
 bajaTeam.appendChild(formularioBaja);
 
-//AL DARSE DE BAJA, ¿QUIERE SEGUIR RECIBIENDO INFORMACIÓN? - 3ER FUNCION
 let rep = 0;
 
 document.getElementById("formuBaja").addEventListener("submit", function (event) {
