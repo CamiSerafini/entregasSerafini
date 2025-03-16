@@ -1,0 +1,12 @@
+[
+    {"nombre":"sabrina","apellido":"sult","edad":22,"correo":"sabrisult@gmail.com","telefono":223578839},
+    {"nombre":"martina","apellido":"terranova","edad":32,"correo":"martaterra@gmail.com","telefono":223579732},
+    {"nombre":"morena","apellido":"hernandez","edad":29,"correo":"morehernandez@gmail.com","telefono":2235997439},
+    {"nombre":"eugenia","apellido":"rosales","edad":20,"correo":"rosaleseuge@gmail.com","telefono":223958572},
+    {"nombre":"andrea","apellido":"ventra","edad":40,"correo":"ventrandre@gmail.com","telefono":223573065},
+    {"nombre":"mariela","apellido":"molina","edad":38,"correo":"molimari@gmail.com","telefono":223573234},
+    {"nombre":"sol","apellido":"avenado","edad":27,"correo":"avenadosolcito@gmail.com","telefono":223532432},
+    {"nombre":"abril","apellido":"ardona","edad":24,"correo":"ardonaabru@gmail.com","telefono":223523425},
+    {"nombre":"luz","apellido":"solpa","edad":26,"correo":"solpaluz@gmail.com","telefono":223573823},
+    {"nombre":"aldana","apellido":"rodas","edad":35,"correo":"rodasaldi@gmail.com","telefono":223574563}
+]

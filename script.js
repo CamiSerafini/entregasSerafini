@@ -1,105 +1,31 @@
-let adolescentes = [
-    {
-        nombre: "juana",
-        apellido: "barrios",
-        edad: 16,
-        correo: "juanabarrios2@gmail.com",
-        telefono: 223573839
-    },
-    {
-        nombre: "delfina",
-        apellido: "juarez",
-        edad: 15,
-        correo: "delfit@gmail.com",
-        telefono: 223573848
-    },
-    {
-        nombre: "maria",
-        apellido: "solani",
-        edad: 18,
-        correo: "smaria20@gmail.com",
-        telefono: 223570659
+//MES A MES ESTA LISTA SE RENUEVA: teniendo en cuenta quienes probaron clases y quieren continuar, o quienes son bajas.
+async function getData(url, clave) {
+    try {
+        // Verifica si ya existen datos en localStorage
+        if (!localStorage.getItem(clave)) {
+            const response = await fetch(url);
+            const data = await response.json();
+            localStorage.setItem(clave, JSON.stringify(data));
+        }
+    } catch (error) {
+        console.error('Error:', error);
     }
-];
+}
 
-let adultos = [
-    {
-        nombre: "sabrina",
-        apellido: "sult",
-        edad: 22,
-        correo: "sabrisult@gmail.com",
-        telefono: 223578839
-    },
-    {
-        nombre: "martina",
-        apellido: "terranova",
-        edad: 32,
-        correo: "martaterra@gmail.com",
-        telefono: 223579732
-    },
-    {
-        nombre: "morena",
-        apellido: "hernandez",
-        edad: 29,
-        correo: "morehernandez@gmail.com",
-        telefono: 2235997439
-    },
-    {
-        nombre: "eugenia",
-        apellido: "rosales",
-        edad: 20,
-        correo: "rosaleseuge@gmail.com",
-        telefono: 223958572
-    },
-    {
-        nombre: "andrea",
-        apellido: "ventra",
-        edad: 40,
-        correo: "ventrandre@gmail.com",
-        telefono: 223573065
-    },
-    {
-        nombre: "mariela",
-        apellido: "molina",
-        edad: 38,
-        correo: "molimari@gmail.com",
-        telefono: 223573234
-    },
-    {
-        nombre: "sol",
-        apellido: "avenado",
-        edad: 27,
-        correo: "avenadosolcito@gmail.com",
-        telefono: 223532432
-    },
-    {
-        nombre: "abril",
-        apellido: "ardona",
-        edad: 24,
-        correo: "ardonaabru@gmail.com",
-        telefono: 223523425
-    },
-    {
-        nombre: "luz",
-        apellido: "solpa",
-        edad: 26,
-        correo: "solpaluz@gmail.com",
-        telefono: 223573823
-    },
-    {
-        nombre: "aldana",
-        apellido: "rodas",
-        edad: 35,
-        correo: "rodasaldi@gmail.com",
-        telefono: 223574563
-    }
-];
+//Solo me va a cargar los datos si el localStorage con esa clave esta vacio, lo hice porque sino siempre que recargo
+//la página se me reiniciaban estos 3 arrays.
+getData('adolescents.json', "Adolescentes");
+getData('adultos.json', "Adultos");
+getData('mayores.json', "Mayores");
 
-let mayores = [];
+let adolescentes = JSON.parse(localStorage.getItem("Adolescentes")) || [];
+let adultos = JSON.parse(localStorage.getItem("Adultos")) || [];
+let mayores = JSON.parse(localStorage.getItem("Mayores")) || [];
+
 
 let datosGuardados = [];
 
-//GUARDAR LOS DATOS QUE YA TENGO EN LOS VECTORES EN datosGuardados para incluir todo luego en localStorage, no solo los nuevos ingresos
+//Guardar los datos que ya tengo en los arrays en datosGuardados para incluir todo luego en localStorage, no solo los nuevos ingresos
 function cargaAlumnos() {
     for (let i = 0; i < adolescentes.length; i++) {
         datosGuardados.push(adolescentes[i]);
@@ -123,15 +49,31 @@ function disponibilidad(cupos) {
     }
 }
 
-function mensajeInscripcion(num, no, mensaje) {
-    if (num) {
-        mensaje.textContent = "Inscripcion exitosa, estaremos publicando las fechas de comienzo";
-        mensaje.className = "desc-3";
-    } else {
-        mensaje.textContent = "No se ha podido inscribir por falta de cupos";
-        mensaje.className = "desc-2";
+function mensajeInscripcion(num) {
+    if(!num){
+        Swal.fire({
+            icon: "warning",
+            title: "Lo sentimos, no se ha podido inscribir por falta de cupos",
+            showConfirmButton: false,
+            timer: 3000
+        });
+    }else{
+        if(num==1){
+            Swal.fire({
+                icon: "success",
+                title: "Inscripción exitosa",
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }else{
+            Swal.fire({
+                icon: "error",
+                title: "Lo sentimos, no disponemos de clases para esa edad",
+                showConfirmButton: false,
+                timer: 3000
+            });
+        }
     }
-    no.appendChild(mensaje);
 }
 
 function ingresante(edad) {
@@ -143,47 +85,51 @@ function ingresante(edad) {
 }
 
 function sacarTurno() {
+    cambios = 1;
     let edad = document.getElementById("edad").value;
     edad = parseInt(edad);
     let no = document.getElementById("inscripcionCorrecta");
-    let mensaje = document.createElement("p");
     let nuevoIngreso = new ingresante(edad);
     //Los datos se guardaran en el local storage en cualquier caso para tener un registro de todos los contactos
     datosGuardados = JSON.parse(localStorage.getItem("Datos"));
     datosGuardados.push(nuevoIngreso);
     localStorage.setItem("Datos", JSON.stringify(datosGuardados));
     if (edad < 4 || edad > 60) {
-        mensaje.textContent = "Lo sentimos, no disponemos de clases para la edad ingresada";
-        mensaje.className = "desc-2";
-        no.appendChild(mensaje);
+        mensajeInscripcion(2);
     }
     else {
         if (edad < 19) {
             if (disponibilidad(adolescentes)) {
+                adolescentes = JSON.parse(localStorage.getItem("Adolescentes"));
                 adolescentes.push(nuevoIngreso);
-                mensajeInscripcion(1, no, mensaje);
+                localStorage.setItem("Adolescentes", JSON.stringify(adolescentes));
+                mensajeInscripcion(1);
             }
             else {
-                mensajeInscripcion(0, no, mensaje);
+                mensajeInscripcion(0);
             }
         }
         else {
             if (edad < 41) {
                 if (disponibilidad(adultos)) {
+                    adultos = JSON.parse(localStorage.getItem("Adultos"));
                     adultos.push(nuevoIngreso);
-                    mensajeInscripcion(1, no, mensaje);
+                    localStorage.setItem("Adultos", JSON.stringify(adultos));
+                    mensajeInscripcion(1);
                 }
                 else {
-                    mensajeInscripcion(0, no, mensaje);
+                    mensajeInscripcion(0);
                 }
             }
             else {
                 if (disponibilidad(mayores)) {
+                    mayores = JSON.parse(localStorage.getItem("Mayores"));
                     mayores.push(nuevoIngreso);
-                    mensajeInscripcion(1, no, mensaje);
+                    localStorage.setItem("Mayores", JSON.stringify(mayores));
+                    mensajeInscripcion(1);
                 }
                 else {
-                    mensajeInscripcion(0, no, mensaje);
+                    mensajeInscripcion(0);
                 }
             }
         }
@@ -199,7 +145,6 @@ function sacarTurno() {
         inputs.forEach(input => input.disabled = false);
 
         no.removeChild(recargar);
-        no.removeChild(mensaje);
         no.removeChild(confirmo);
     }
 
@@ -210,13 +155,12 @@ function sacarTurno() {
     recargar.addEventListener("click", habilitarFormulario);
 
     let confirmo = document.createElement("button");
-    confirmo.textContent = "Confirmo";
+    confirmo.textContent = "Confirmo los datos ingresados";
     confirmo.className = "botonCentro";
     no.appendChild(confirmo);
     confirmo.addEventListener("click", function () {
         formulario.reset();
         no.removeChild(recargar);
-        no.removeChild(mensaje);
         no.removeChild(confirmo);
     });
 }
@@ -226,7 +170,7 @@ function sacarTurno() {
 function refrescarPagina() {
     setTimeout(function () {
         location.reload(); // Recarga la página
-    }, 3000);
+    }, 2500);
 }
 
 function noRecibir(nombre, apellido) {
@@ -248,26 +192,42 @@ function noRecibir(nombre, apellido) {
     });
 }
 
+function cartelEliminaBien(){
+    Swal.fire({
+        title: "Usted se ha dado de baja correctamente",
+        icon: "success"
+    });
+}
+
+function cartelNoExiste(){
+    Swal.fire({
+        title: "Usted no se encuentra inscripto",
+        icon: "error"
+    });
+}
+
 function baja() {
+    cambios=1;
     let nombre = (document.getElementById("nombreBaja").value).toLowerCase();
     let apellido = (document.getElementById("apellidoBaja").value).toLowerCase();
     let edad = parseInt(document.getElementById("edadBaja").value);
-    let elimina = document.createElement("p");
     let posicion;
 
     if (edad < 4 || edad > 60) {
-        elimina.textContent = "Usted no se encuentra inscripto ya que no disponemos clases para esa edad";
+        cartelNoExiste();
         refrescarPagina();
     }
     else {
         if (edad < 19) {
             posicion = adolescentes.findIndex(adol => adol.nombre === nombre && adol.apellido === apellido);
             if (posicion >= 0) {
+                adolescentes = JSON.parse(localStorage.getItem("Adolescentes"));
                 adolescentes.splice(posicion, 1);
-                elimina.textContent = "Eliminado correctamente";
+                localStorage.setItem("Adolescentes", JSON.stringify(adolescentes));
+                cartelEliminaBien();
             }
             else {
-                elimina.textContent = "Usted no se encuentra inscripto";
+                cartelNoExiste();
                 refrescarPagina();
             }
         }
@@ -275,30 +235,32 @@ function baja() {
             if (edad < 41) {
                 posicion = adultos.findIndex(adult => adult.nombre === nombre && adult.apellido === apellido);
                 if (posicion >= 0) {
+                    adultos = JSON.parse(localStorage.getItem("Adultos"));
                     adultos.splice(posicion, 1);
-                    elimina.textContent = "Eliminado correctamente";
-
+                    localStorage.setItem("Adutlos", JSON.stringify(adultos));
+                    cartelEliminaBien();
                 }
                 else {
-                    elimina.textContent = "Usted no se encuentra inscripto";
+                    cartelNoExiste();
                     refrescarPagina();
                 }
             }
             else {
                 posicion = mayores.findIndex(may => may.nombre === nombre && may.apellido === apellido);
                 if (posicion >= 0) {
+                    mayores = JSON.parse(localStorage.getItem("Mayores"));
                     mayores.splice(posicion, 1);
-                    elimina.textContent = "Eliminado correctamente";
+                    localStorage.setItem("Mayores", JSON.stringify(mayores));
+                    cartelEliminaBien();
                 }
                 else {
-                    elimina.textContent = "Usted no se encuentra inscripto";
+                    cartelNoExiste();
                     refrescarPagina();
                 }
             }
         }
     }
     rep = 1;
-    formularioBaja.appendChild(elimina);
     if (posicion >= 0) {
         noRecibir(nombre, apellido);
     }
@@ -310,6 +272,7 @@ function baja() {
 //Inicializar "Base de Datos"
 cargaAlumnos();
 
+let cambios=0;
 
 //SACAR TURNO - 1ER FUNCION
 
@@ -334,8 +297,9 @@ botonBaja.addEventListener("click", function () {
         <input type="text" id="apellidoBaja" name="apellido" class="baja" required>
         <label for="edadBaja">Edad</label>
         <input type="numeric" id="edadBaja" name="edad" class="baja" required>
-        <button type="submit">Enviar</button>`
+        <button type="submit" id="confirma">Enviar</button>`
 });
+
 
 bajaTeam.appendChild(formularioBaja);
 
@@ -344,6 +308,39 @@ let rep = 0;
 document.getElementById("formuBaja").addEventListener("submit", function (event) {
     if (rep == 0) {
         event.preventDefault();
-        baja();
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+              confirmButton: "btn btn-success",
+              cancelButton: "btn btn-danger"
+            },
+            buttonsStyling: false
+          });
+          swalWithBootstrapButtons.fire({
+            title: "¿Estas seguro?",
+            text: "No podrás revertir esto",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Si, estoy seguro",
+            cancelButtonText: "No, cancelar por favor!",
+            reverseButtons: true
+          }).then((result) => {
+            if (result.isConfirmed) {
+                baja();
+              swalWithBootstrapButtons.fire({
+                title: "Eliminado",
+                text: "Esperamos verte nuevamente",
+                icon: "success"
+              });
+            } else if (
+              result.dismiss === Swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire({
+                title: "Cancelado",
+                text: "Nos alegra seguir teniendote en nuestras clases",
+                icon: "error"
+              });
+            }
+          });
+
     }
 });
