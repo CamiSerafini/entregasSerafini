@@ -197,9 +197,35 @@ form {
     color: rgb(117, 4, 117);
 }
 
-#ventas p {
-    color: rgb(0, 0, 0);
+.imgProd{
+    width: 200px;
+    height: 200px;
 }
+
+.descProd{
+    font-size: 22px;
+    color: darkmagenta;
+}
+
+.productos{
+    text-align: center;
+    margin: 10px;
+    border-radius: 5px;
+    border: #ca89ca 2px solid;
+}
+
+#ventas{
+    margin-top: 20px;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+#comprar{
+    margin-bottom: 5px;
+    margin-top: 7px;
+}
+
 
 
 

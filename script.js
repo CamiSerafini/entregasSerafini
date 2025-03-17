@@ -14,9 +14,9 @@ async function getData(url, clave) {
 
 //Solo me va a cargar los datos si el localStorage con esa clave esta vacio, lo hice porque sino siempre que recargo
 //la página se me reiniciaban estos 3 arrays.
-getData('adolescents.json', "Adolescentes");
-getData('adultos.json', "Adultos");
-getData('mayores.json', "Mayores");
+getData('/json/adolescents.json', "Adolescentes");
+getData('/json/adultos.json', "Adultos");
+getData('/json/mayores.json', "Mayores");
 
 let adolescentes = JSON.parse(localStorage.getItem("Adolescentes")) || [];
 let adultos = JSON.parse(localStorage.getItem("Adultos")) || [];
@@ -266,6 +266,42 @@ function baja() {
     }
 
 }
+
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+getData('/json/productos.json', "Productos");
+let productos = JSON.parse(localStorage.getItem("Productos")) || [];
+
+getData('/json/carrito.json',"Carrito");
+let carrito = JSON.parse(localStorage.getItem("Carrito")) || [];
+
+let cubres = document.getElementById("cubres");
+let remera = document.getElementById("remera");
+let bolsos = document.getElementById("bolsos");
+let campera = document.getElementById("campera");
+let gala = document.getElementById("gala");
+
+function agregandoCarrito(elem,val){
+    const existe = carrito.find(prod => prod.nombre === elem);
+    if(existe){
+        existe.cantidad++;
+    }else{
+        carrito.push({
+            nom:elem,cantidad:1,precio:val
+        })
+    }
+}
+
+cubres.addEventListener("click",agregandoCarrito("cubres",5000));
+remera.addEventListener("click",agregandoCarrito("remera",10000));
+bolsos.addEventListener("click",agregandoCarrito("bolsos",12000));
+campera.addEventListener("click",agregandoCarrito("campera",20000));
+gala.addEventListener("click",agregandoCarrito("gala",70000));
+
+let comprar = document.getElementById("finalizaCompra");
+comprar.addEventListener("click",function(){
+    
+})
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
