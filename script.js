@@ -343,6 +343,8 @@ function actualizarNumero(){
 }
 
 actualizarNumero(); // Asi cuando refresco la pagina sigue apareciendo el numero y no se me pone en 0
+
+
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 //Inicializar "Base de Datos"

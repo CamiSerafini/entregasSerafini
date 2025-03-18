@@ -233,7 +233,7 @@ form {
 
 .tarjeta-producto:hover{
     box-shadow: 0px 5px 5px rgba(3, 2, 2, 0.2);
-     translate: 0px -5px;
+    translate: 0px -5px;
 }
 
 .tarjeta-producto .boton-carrito{

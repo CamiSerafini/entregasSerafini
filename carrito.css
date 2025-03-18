@@ -1,0 +1,35 @@
+.tarjeta-producto-carrito{
+    display: flex;
+    align-items: center;
+    margin: 10px;
+    gap: 15px;
+}
+
+#ventas{
+    display: block;
+    width: 500px;
+    margin: auto;
+}
+
+.tarjeta-producto-carrito img{
+    width: 150px;
+    height: 150px;
+}
+
+.tarjeta-producto-carrito h3{
+    font-size: 20px;
+    width: 100px;
+}
+
+.tarjeta-producto-carrito p{
+    font-size: 20px;
+}
+
+.suma-resta button{
+    margin: 0;
+}
+
+#totales{
+    text-align: center;
+    margin-top: 20px;
+}

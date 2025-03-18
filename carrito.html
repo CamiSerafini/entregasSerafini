@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="carrito.css">
     <title>Carrito de compras</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
 </head>
@@ -41,7 +42,13 @@
         <a class="carrito-fijo" href="carrito.html"><img class="carrito" src="/images/carrito.jpg" alt="Carrito de compras"><span id="cuenta-carrito">0</span></a>
     </header>
     <main>
-
+        <section id="ventas"></section>
+        <section id="totales">
+            <p>Unidades totales: <span id="unidades">0</span></p>
+            <p>Precio total $<span id="precio-total">0</span></p>
+            <button>Comprar</button>
+            <button>Reiniciar carrito</button>
+        </section>
     </main>
     <footer id="Footer">
         <div class="logo">
@@ -65,6 +72,7 @@
 
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="script.js"></script>
+    <script src="carrito.js"></script>
+    
 </body>
 </html>
