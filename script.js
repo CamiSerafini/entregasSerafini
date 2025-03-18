@@ -275,34 +275,74 @@ let productos = JSON.parse(localStorage.getItem("Productos")) || [];
 getData('/json/carrito.json',"Carrito");
 let carrito = JSON.parse(localStorage.getItem("Carrito")) || [];
 
-let cubres = document.getElementById("cubres");
-let remera = document.getElementById("remera");
-let bolsos = document.getElementById("bolsos");
-let campera = document.getElementById("campera");
-let gala = document.getElementById("gala");
+// let cubres = document.getElementById("cubres");
+// let remera = document.getElementById("remera");
+// let bolsos = document.getElementById("bolsos");
+// let campera = document.getElementById("campera");
+// let gala = document.getElementById("gala");
 
-function agregandoCarrito(elem,val){
-    const existe = carrito.find(prod => prod.nombre === elem);
-    if(existe){
-        existe.cantidad++;
-    }else{
-        carrito.push({
-            nom:elem,cantidad:1,precio:val
-        })
+// function agregandoCarrito(elem,val){
+//     const existe = carrito.find(prod => prod.nombre === elem);
+//     if(existe){
+//         existe.cantidad++;
+//     }else{
+//         carrito.push({
+//             nom:elem,cantidad:1,precio:val
+//         })
+//     }
+// }
+
+// cubres.addEventListener("click",agregandoCarrito("cubres",5000));
+// remera.addEventListener("click",agregandoCarrito("remera",10000));
+// bolsos.addEventListener("click",agregandoCarrito("bolsos",12000));
+// campera.addEventListener("click",agregandoCarrito("campera",20000));
+// gala.addEventListener("click",agregandoCarrito("gala",70000));
+
+const contenedor = document.getElementById("ventas");
+
+/** Crea las tarjetas de productos teniendo en cuenta la lista en bicicletas.js */
+function crearProductos(productos){
+  productos.forEach(producto => {
+    const nuevoAccesorio = document.createElement("div");
+    nuevoAccesorio.classList = "tarjeta-producto"
+    nuevoAccesorio.innerHTML = `
+    <img src="/images/${producto.nom}.jpg" alt="Accesorio patin artistico">
+    <h3>${producto.nom}</h3>
+    <p class="precio">$${producto.precio}</p>
+    <button class="boton-carrito">Agregar al carrito</button>`
+    contenedor.appendChild(nuevoAccesorio);
+    nuevoAccesorio.getElementsByTagName("button")[0].addEventListener("click",() => agregarAlCarrito(producto))
+  });
+}
+crearProductos(productos);
+
+function agregarAlCarrito(producto){
+    if(!carrito || carrito.length === 0){ //En caso de que aun no haya nada en el carrito
+        const nuevoProducto = producto;
+        nuevoProducto.cantidad = 1;
+        localStorage.setItem("Carrito",JSON.stringify([nuevoProducto]));
+    }else{ //Hay algo pero tengo que ver si del producto que agrego es el primero o no 
+        const ind = carrito.findIndex(car=> car.nom === producto.nom);
+        const nuevoCarrito = carrito;
+        if(ind === -1){ //Primero que agrego de ese producto
+            producto.cantidad = 1;
+            nuevoCarrito.push(producto);
+        }else{ //Ya se habia pedido algo de ese producto
+            nuevoCarrito[ind].cantidad++;
+        }
+        localStorage.setItem("Carrito",JSON.stringify(nuevoCarrito));
+        actualizarNumero();
     }
+} 
+
+const cuentaCarrito = document.getElementById("cuenta-carrito");
+
+function actualizarNumero(){
+    const suma = carrito.reduce((acum,current)=>acum + current.cantidad, 0);
+    cuentaCarrito.innerText = suma;
 }
 
-cubres.addEventListener("click",agregandoCarrito("cubres",5000));
-remera.addEventListener("click",agregandoCarrito("remera",10000));
-bolsos.addEventListener("click",agregandoCarrito("bolsos",12000));
-campera.addEventListener("click",agregandoCarrito("campera",20000));
-gala.addEventListener("click",agregandoCarrito("gala",70000));
-
-let comprar = document.getElementById("finalizaCompra");
-comprar.addEventListener("click",function(){
-    
-})
-
+actualizarNumero(); // Asi cuando refresco la pagina sigue apareciendo el numero y no se me pone en 0
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
 
 //Inicializar "Base de Datos"
