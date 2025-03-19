@@ -3,6 +3,7 @@ const conteiner = document.getElementById("ventas");
 let unidadesElement = document.getElementById("unidades");
 let precioElement = document.getElementById("precio-total");
 let reinicia = document.getElementById("reiniciar");
+let finalizaCompra = document.getElementById("compra-hecha");
 
 /** Crea las tarjetas de productos teniendo en cuenta la lista en carrito.json */
 function prodCarrito() {
@@ -125,4 +126,15 @@ function reiniciarCarrito() {
     actualizarTotales();
     prodCarrito();
     cuentaCarrito.innerText = 0;
+}
+
+
+finalizaCompra.addEventListener("click", comprado);
+function comprado() {
+    reiniciarCarrito();
+    Swal.fire({
+        icon: "success",
+        title: "Compra exitosa",
+        timer: 3000
+    });
 }

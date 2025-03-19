@@ -46,6 +46,7 @@
 }
 
 #reiniciar,
-.aunNO-disponible {
+#compra-hecha {
     margin-top: 10px;
+    cursor: pointer;
 }
