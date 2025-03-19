@@ -1,5 +1,8 @@
 //PARA LA PÁGINA DEL CARRITO
 const conteiner = document.getElementById("ventas");
+let unidadesElement = document.getElementById("unidades");
+let precioElement = document.getElementById("precio-total");
+let reinicia = document.getElementById("reiniciar");
 
 /** Crea las tarjetas de productos teniendo en cuenta la lista en bicicletas.js */
 function prodCarrito(){
@@ -24,17 +27,22 @@ function prodCarrito(){
                 // agregarAlCarrito(element);
                 const cuenta = e.target.parentElement.getElementsByTagName("span")[0];
                 cuenta.innerText = agregarAlCarrito(element);
+                actualizarTotales();
             });
             accesorioCarrito.getElementsByTagName("button")[0].addEventListener("click",() => {
                 restarAlCarrito(element);
                 prodCarrito();
+                actualizarTotales();
             }); 
         });
 
-    };
+    }else{
+        localStorage.removeItem("Carrito");
+    }
 }
 
 prodCarrito();
+actualizarTotales();
 
 function agregarAlCarrito(element){
     let elementos = JSON.parse(localStorage.getItem("Carrito"));
@@ -63,25 +71,60 @@ function agregarAlCarrito(element){
 
 function restarAlCarrito(element){
     let elementos = JSON.parse(localStorage.getItem("Carrito"));
-    const ind = elementos.findIndex(car=> car.nom === element.nom);
-    if(elementos[ind].cantidad ===1){
-        //borro todo el elemento
-        elementos.splice(ind,1);
+    if(elementos && elementos.length>0){
+        const ind = elementos.findIndex(car=> car.nom === element.nom);
+        if(elementos[ind].cantidad ===1){
+            //borro todo el elemento
+            elementos.splice(ind,1);
+        }else{
+            elementos[ind].cantidad--;
+        }
+        localStorage.setItem("Carrito",JSON.stringify(elementos));
+        actualizarNumero();
     }else{
-        elementos[ind].cantidad--;
+        localStorage.removeItem("Carrito");
     }
-    localStorage.setItem("Carrito",JSON.stringify(elementos));
+    
 }
 
 const cuentaCarrito = document.getElementById("cuenta-carrito");
 
 function actualizarNumero(){
     let elementos = JSON.parse(localStorage.getItem("Carrito"));
-    const suma = elementos.reduce((acum,current)=>acum + current.cantidad, 0);
-    cuentaCarrito.innerText = suma;
+    if(elementos && elementos.length>0){
+        const suma = elementos.reduce((acum,current)=>acum + current.cantidad, 0);
+        cuentaCarrito.innerText = suma;
+    }else{
+        cuentaCarrito.innerText = 0;
+    }
+    
 }
 
 actualizarNumero();
 
 
+function actualizarTotales(){
+    const elementos = JSON.parse(localStorage.getItem("Carrito"));
+    let acumulaUnidad = 0;
+    let acumulaPrecio = 0;
+    if(elementos && elementos.length>0){
+        elementos.forEach(element => {
+            acumulaUnidad += element.cantidad;
+            acumulaPrecio += element.cantidad*element.precio;
+        })
+        unidadesElement.innerText = acumulaUnidad;
+        precioElement.innerText = acumulaPrecio;
+    }else{
+        unidadesElement.innerText = 0;
+        precioElement.innerText = 0;
+    }
+}
 
+//Necesitaría sacarlo ademas del LocalStorage
+reinicia.addEventListener("click",reiniciarCarrito);
+function reiniciarCarrito(){
+    localStorage.removeItem("Carrito");
+    actualizarTotales();
+    prodCarrito();
+    cuentaCarrito.innerText = 0;
+}

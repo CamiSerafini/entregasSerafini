@@ -77,8 +77,9 @@ header a {
     top: 1rem;
     text-decoration: none;
     color: black;
+    font-weight: bold;
     border: 1px black solid;
-    background-color: white;
+    background-color: rgb(234, 0, 255);
     padding: 2px;
 }
 
@@ -255,7 +256,11 @@ form {
     right: 35px;
 }
 
-
+.boton-vercarrito{
+    display: block;
+    width: fit-content;
+    margin: 0 auto;
+}
 
 footer {
     color: #aa16ab;

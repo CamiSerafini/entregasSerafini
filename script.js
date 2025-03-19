@@ -275,29 +275,6 @@ let productos = JSON.parse(localStorage.getItem("Productos")) || [];
 getData('/json/carrito.json',"Carrito");
 let carrito = JSON.parse(localStorage.getItem("Carrito")) || [];
 
-// let cubres = document.getElementById("cubres");
-// let remera = document.getElementById("remera");
-// let bolsos = document.getElementById("bolsos");
-// let campera = document.getElementById("campera");
-// let gala = document.getElementById("gala");
-
-// function agregandoCarrito(elem,val){
-//     const existe = carrito.find(prod => prod.nombre === elem);
-//     if(existe){
-//         existe.cantidad++;
-//     }else{
-//         carrito.push({
-//             nom:elem,cantidad:1,precio:val
-//         })
-//     }
-// }
-
-// cubres.addEventListener("click",agregandoCarrito("cubres",5000));
-// remera.addEventListener("click",agregandoCarrito("remera",10000));
-// bolsos.addEventListener("click",agregandoCarrito("bolsos",12000));
-// campera.addEventListener("click",agregandoCarrito("campera",20000));
-// gala.addEventListener("click",agregandoCarrito("gala",70000));
-
 const contenedor = document.getElementById("ventas");
 
 /** Crea las tarjetas de productos teniendo en cuenta la lista en bicicletas.js */
@@ -317,6 +294,7 @@ function crearProductos(productos){
 crearProductos(productos);
 
 function agregarAlCarrito(producto){
+    let carrito = JSON.parse(localStorage.getItem("Carrito")) || [];
     if(!carrito || carrito.length === 0){ //En caso de que aun no haya nada en el carrito
         const nuevoProducto = producto;
         nuevoProducto.cantidad = 1;
@@ -338,6 +316,7 @@ function agregarAlCarrito(producto){
 const cuentaCarrito = document.getElementById("cuenta-carrito");
 
 function actualizarNumero(){
+    let carrito = JSON.parse(localStorage.getItem("Carrito")) || [];
     const suma = carrito.reduce((acum,current)=>acum + current.cantidad, 0);
     cuentaCarrito.innerText = suma;
 }
