@@ -1,4 +1,4 @@
-/*Laptop 1440px y 1024px*/
+/*Vista Laptop 1440px y 1024px*/
 
 * {
     margin: 0px;
@@ -198,17 +198,17 @@ form {
     color: rgb(117, 4, 117);
 }
 
-.imgProd{
+.imgProd {
     width: 200px;
     height: 200px;
 }
 
-.descProd{
+.descProd {
     font-size: 22px;
     color: darkmagenta;
 }
 
-#ventas{
+#ventas {
     margin-top: 20px;
     margin-bottom: 30px;
     display: flex;
@@ -216,7 +216,7 @@ form {
     flex-wrap: wrap;
 }
 
-.tarjeta-producto{
+.tarjeta-producto {
     max-width: 400 px;
     margin: 10px;
     border-radius: 5px;
@@ -227,17 +227,17 @@ form {
     transition: 200ms;
 }
 
-.tarjeta-producto img{
+.tarjeta-producto img {
     width: 200px;
     height: 200px;
 }
 
-.tarjeta-producto:hover{
+.tarjeta-producto:hover {
     box-shadow: 0px 5px 5px rgba(3, 2, 2, 0.2);
     translate: 0px -5px;
 }
 
-.tarjeta-producto .boton-carrito{
+.tarjeta-producto .boton-carrito {
     margin-top: 10px;
     margin-bottom: 8px;
     border: #4b004b solid 2px;
@@ -245,21 +245,27 @@ form {
     cursor: pointer;
 }
 
-.carrito{
+.carrito {
     height: 35px;
     width: 35px;
     border-radius: 17px;
 }
 
-.carrito-fijo{
+.carrito-fijo {
     position: fixed;
     right: 35px;
 }
 
-.boton-vercarrito{
+.boton-vercarrito {
     display: block;
     width: fit-content;
     margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.boton-vercarrito button {
+    margin: 0;
+    cursor: pointer;
 }
 
 footer {

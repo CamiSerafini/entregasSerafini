@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="carrito.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/carrito.css">
     <title>Carrito de compras</title>
     <link rel="shortcut icon" href="images/logo.png" type="image/x-icon">
 </head>
+
 <body>
     <header id="header">
         <div class="logo">
@@ -39,15 +41,17 @@
                 </li>
             </ul>
         </nav>
-        <a class="carrito-fijo" href="carrito.html"><img class="carrito" src="/images/carrito.jpg" alt="Carrito de compras"><span id="cuenta-carrito">0</span></a>
+        <a class="carrito-fijo" href="carrito.html"><img class="carrito" src="/images/carrito.jpg"
+                alt="Carrito de compras"><span id="cuenta-carrito">0</span></a>
     </header>
     <main>
-        <p id="carrito-vacio">Si no hay productos en el carrito: <a href="index.html#ventas">Agrega desde aquí!</a></p>
+        <p id="carrito-vacio">Si no hay productos en el carrito: <a href="index.html#accesorios">Agrega desde aquí!</a>
+        </p>
         <section id="ventas"></section>
         <section id="totales">
             <p>Unidades totales: <span id="unidades">0</span></p>
             <p>Precio total $<span id="precio-total">0</span></p>
-            <button>Comprar</button>
+            <button class="aunNO-disponible">Comprar</button>
             <button id="reiniciar">Reiniciar carrito</button>
         </section>
     </main>
@@ -58,8 +62,8 @@
         <div>
             <div class="seguinos">
                 <h2>Seguinos en Instagram</h2>
-                <a href="https://www.instagram.com/amteampatin/" target="_blank"><img src="images/instagram.png"
-                        alt="Instagram" class="redes"></a>
+                <a href="https://www.instagram.com/amteampatinartistico?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw=="
+                    target="_blank"><img src="images/instagram.png" alt="Instagram" class="redes"></a>
             </div>
             <div class="center">
                 <h3>Direcciones</h3>
@@ -73,7 +77,8 @@
 
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="carrito.js"></script>
-    
+    <script src="/js/carrito.js"></script>
+
 </body>
+
 </html>
