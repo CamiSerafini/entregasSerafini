@@ -53,6 +53,7 @@ Entre cada prueba seleccionar la opcion de cargar nuevos datos para reiniciar el
     - Edad: 52
     - Mail: camii@gmail.com
     - Telefono: 2237647839
+    
   Al finalizar las cargas necesarias -> Confirmar datos!
 
 - Dar de baja:
