@@ -381,11 +381,6 @@ document.getElementById("formuBaja").addEventListener("submit", function (event)
         }).then((result) => {
             if (result.isConfirmed) {
                 baja();
-                swalWithBootstrapButtons.fire({
-                    title: "Eliminado",
-                    text: "Esperamos verte nuevamente",
-                    icon: "success"
-                });
             } else if (
                 result.dismiss === Swal.DismissReason.cancel
             ) {

@@ -131,10 +131,20 @@ function reiniciarCarrito() {
 
 finalizaCompra.addEventListener("click", comprado);
 function comprado() {
-    reiniciarCarrito();
-    Swal.fire({
-        icon: "success",
-        title: "Compra exitosa",
-        timer: 3000
-    });
+    const elementos = JSON.parse(localStorage.getItem("Carrito"));
+    if (elementos && elementos.length > 0) {
+        reiniciarCarrito();
+        Swal.fire({
+            icon: "success",
+            title: "Compra exitosa",
+            timer: 3000
+        });
+    } else {
+        Swal.fire({
+            icon: "warning",
+            title: "No hay elementos en tu carrito! Recuerda primero añadirlos",
+            timer: 3000
+        });
+    }
+
 }
